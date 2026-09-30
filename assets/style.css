@@ -733,7 +733,9 @@ section.sx-sec--tight { padding: clamp(56px, 7vw, 96px) 0; }
 .sx-facts > div { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 24px; padding: 18px 0; border-bottom: 1px solid var(--ink-faint); }
 .sx-facts dt { font: 500 10px/2.2 var(--font-body); letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold-ink); }
 .sx-facts dd { margin: 0; font-family: var(--font-display); font-size: 21px; }
-.sx-facts a { border-bottom: 1px solid var(--gold); }
+.sx-facts a { position: relative; border-bottom: 1px solid var(--gold); }
+/* Same 44px+ hit area as .sx-link, without moving the underline. */
+.sx-facts a::before { content: ""; position: absolute; left: -8px; right: -8px; top: -10px; bottom: -10px; }
 
 /* Photography placeholder — clearly marked until licensed images exist */
 .sx-ph {
@@ -746,12 +748,12 @@ section.sx-sec--tight { padding: clamp(56px, 7vw, 96px) 0; }
 
 /* Header — desktop 3-column; below 760px a bar with a hamburger that opens a :target panel (works without JS) */
 .sx-header { position: relative; z-index: 30; color: var(--ink-soft); font-family: var(--font-body); }
-.sx-header--over { position: absolute; top: 0; left: 0; right: 0; color: rgba(243, 238, 231, 0.9); }
+.sx-header--over { position: absolute; top: 0; left: 0; right: 0; color: rgba(243, 238, 231, 0.86); }
 .sx-header--light { border-bottom: 1px solid var(--ink-faint); background: var(--ivory); }
 .sx-header a { border-bottom: 0; color: inherit; }
 .sx-header__wide { display: none; }
 .sx-header__narrow { display: block; }
-.sx-header__grid { max-width: var(--sx-max); margin: 0 auto; padding: 22px 40px; display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 24px; }
+.sx-header__grid { max-width: var(--sx-max); margin: 0 auto; padding: 22px 48px; display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 32px; }
 .sx-nav { display: flex; flex-wrap: wrap; gap: 0 24px; align-items: center; }
 .sx-nav--end { justify-content: flex-end; gap: 0 24px; }
 .sx-nav a { display: inline-flex; align-items: center; min-height: 44px; font: 500 10px/1.4 var(--font-body); letter-spacing: 0.3em; text-transform: uppercase; }
@@ -792,6 +794,10 @@ section.sx-sec--tight { padding: clamp(56px, 7vw, 96px) 0; }
 }
 @media (min-width: 760px) and (max-width: 939px) {
   .sx-header .sx-nav a.sx-phone { display: none; }
+}
+/* The full 48px / 32px bar needs about 1200px to stay on one line; just below that, ease it slightly. */
+@media (min-width: 1120px) and (max-width: 1199px) {
+  .sx-header__grid { padding: 22px 40px; gap: 24px; }
 }
 
 /* Footer — lattice divider, four auto-fit columns, legal row */

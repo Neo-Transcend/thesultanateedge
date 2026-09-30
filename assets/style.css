@@ -684,7 +684,7 @@ footer .legal {
   --avail: #3E7A52;             /* availability green — booking only */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --sx-pad: clamp(20px, 4vw, 48px);
-  --sx-max: 1184px;
+  --sx-max: 1280px; /* 1184px of content plus 48px padding each side (border-box), as in the design */
 }
 
 .sx-wrap { max-width: var(--sx-max); margin: 0 auto; padding: 0 var(--sx-pad); }

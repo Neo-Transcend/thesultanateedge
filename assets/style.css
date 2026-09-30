@@ -668,3 +668,151 @@ footer .legal {
 /* Coming-soon lockup carries an extra line, so lift it slightly to keep the
    wordmark optically the same size as on the open houses. */
 .brand-logo.is-soon { height: clamp(63px, 7vw, 90px); }
+
+
+/* =====================================================================
+ * Edition One · shared primitives for the 2026-09 hub redesign
+ * ---------------------------------------------------------------------
+ * ADDITIVE ONLY. Every selector below is namespaced `sx-` (or `[data-reveal]`),
+ * so nothing above this line changes for the four property sites. This file is
+ * still byte-identical across all five repos: copy it, never fork it.
+ * Hub-only layout lives in hub.css, not here.
+ * ===================================================================== */
+
+:root {
+  --card: #FDFBF9;              /* raised surface on ivory */
+  --avail: #3E7A52;             /* availability green — booking only */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --sx-pad: clamp(20px, 4vw, 48px);
+  --sx-max: 1184px;
+}
+
+.sx-wrap { max-width: var(--sx-max); margin: 0 auto; padding: 0 var(--sx-pad); }
+section.sx-sec { padding: clamp(72px, 9vw, 120px) 0; }
+section.sx-sec--tight { padding: clamp(56px, 7vw, 96px) 0; }
+.sx-band { background: var(--ivory-deep); }
+.sx-ceremony { background: var(--ink); color: var(--on-ink); }
+
+/* Type */
+.sx-h1 { font-size: clamp(44px, 6.8vw, 90px); line-height: 1.02; letter-spacing: 0.005em; max-width: 11em; }
+.sx-h2 { font-size: clamp(34px, 4vw, 52px); line-height: 1.06; }
+.sx-h3 { font-size: clamp(26px, 2.4vw, 34px); line-height: 1.1; }
+.sx-ceremony h1, .sx-ceremony h2, .sx-ceremony h3 { color: var(--on-ink); }
+.sx-eyebrow { font: 500 10px/1.4 var(--font-body); letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold-ink); margin: 0 0 18px; }
+.sx-eyebrow--gold, .sx-ceremony .sx-eyebrow { color: var(--gold); }
+.sx-rule { display: block; width: 64px; height: 1px; margin-top: 26px; background: linear-gradient(90deg, var(--gold), transparent); }
+.sx-body { font-weight: 300; font-size: 15px; line-height: 1.8; color: var(--ink-soft); }
+.sx-lede { font-weight: 300; font-size: clamp(16px, 1.5vw, 18px); line-height: 1.75; color: var(--ink-soft); }
+.sx-pull { font-family: var(--font-display); font-style: italic; font-weight: 300; font-size: clamp(22px, 2.2vw, 28px); line-height: 1.45; }
+
+/* Buttons: primary is an ink fill; secondary a gold hairline. Gold only fills on hover. */
+.sx-btn, .sx-btn--ghost {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 52px; padding: 0 36px; cursor: pointer;
+  font: 500 10px/1 var(--font-body); letter-spacing: 0.3em; text-transform: uppercase;
+  border: 1px solid var(--ink); background: var(--ink); color: var(--on-ink);
+  transition: background 0.35s var(--ease-cinematic), color 0.35s var(--ease-cinematic), border-color 0.35s var(--ease-cinematic);
+}
+.sx-btn--ghost { background: transparent; color: var(--ink); border-color: var(--gold); }
+.sx-btn:hover, .sx-btn--ghost:hover { background: var(--gold); border-color: var(--gold); color: var(--ink); }
+.sx-ceremony .sx-btn--ghost { color: var(--on-ink); }
+.sx-ceremony .sx-btn--ghost:hover { color: var(--ink); }
+.sx-btn[disabled], .sx-btn[aria-disabled="true"] { opacity: 0.35; cursor: not-allowed; pointer-events: none; }
+.sx-link {
+  position: relative; display: inline-block; padding-bottom: 5px; border-bottom: 1px solid var(--gold);
+  font: 500 10px/1.3 var(--font-body); letter-spacing: 0.3em; text-transform: uppercase; color: var(--ink);
+}
+.sx-link:hover { color: var(--gold-ink); }
+/* The underline hugs the text; the hit area is enlarged to 44px+ without moving it. */
+.sx-link::before { content: ""; position: absolute; left: -8px; right: -8px; top: -16px; bottom: -14px; }
+.sx-ceremony .sx-link { color: var(--on-ink); }
+.sx-ceremony .sx-link:hover { color: var(--gold); }
+
+/* Key / value rows (facts, contact) */
+.sx-facts { margin: 0; border-top: 1px solid var(--ink-faint); }
+.sx-facts > div { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 24px; padding: 18px 0; border-bottom: 1px solid var(--ink-faint); }
+.sx-facts dt { font: 500 10px/2.2 var(--font-body); letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold-ink); }
+.sx-facts dd { margin: 0; font-family: var(--font-display); font-size: 21px; }
+.sx-facts a { border-bottom: 1px solid var(--gold); }
+
+/* Photography placeholder — clearly marked until licensed images exist */
+.sx-ph {
+  position: relative; display: flex; align-items: flex-end; width: 100%; height: 100%; min-height: 160px;
+  background: repeating-linear-gradient(135deg, var(--ivory-deep) 0 14px, var(--ivory-edge) 14px 15px);
+  border: 1px solid var(--ivory-edge); overflow: hidden;
+}
+.sx-ph > span { position: relative; margin: 16px; padding: 6px 10px; background: rgba(249, 245, 241, 0.94); font: 500 10px/1.4 var(--font-body); letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold-ink); }
+.sx-ph > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+/* Header — desktop 3-column; below 760px a bar with a hamburger that opens a :target panel (works without JS) */
+.sx-header { position: relative; z-index: 30; color: var(--ink-soft); font-family: var(--font-body); }
+.sx-header--over { position: absolute; top: 0; left: 0; right: 0; color: rgba(243, 238, 231, 0.9); }
+.sx-header--light { border-bottom: 1px solid var(--ink-faint); background: var(--ivory); }
+.sx-header a { border-bottom: 0; color: inherit; }
+.sx-header__wide { display: none; }
+.sx-header__narrow { display: block; }
+.sx-header__grid { max-width: var(--sx-max); margin: 0 auto; padding: 22px 40px; display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 24px; }
+.sx-nav { display: flex; flex-wrap: wrap; gap: 0 24px; align-items: center; }
+.sx-nav--end { justify-content: flex-end; gap: 0 24px; }
+.sx-nav a { display: inline-flex; align-items: center; min-height: 44px; font: 500 10px/1.4 var(--font-body); letter-spacing: 0.3em; text-transform: uppercase; }
+.sx-nav a:hover, .sx-nav a[aria-current="page"] { color: var(--gold); }
+/* Gold is 2:1 on ivory; small caps on the light header use the darkened gold-ink. */
+.sx-header--light .sx-nav a:hover, .sx-header--light .sx-nav a[aria-current="page"], .sx-header--light a.sx-book:hover { color: var(--gold-ink); }
+.sx-header--light a.sx-book:hover { color: var(--ink); }
+.sx-header .sx-nav a.sx-phone { font: 400 13px/1 var(--font-body); letter-spacing: 0; text-transform: none; }
+.sx-logo { display: block; line-height: 0; }
+.sx-logo img { height: 60px; width: auto; }
+.sx-header a.sx-book { border: 1px solid var(--gold); padding: 0 26px; min-height: 44px; display: inline-flex; align-items: center; font: 500 10px/1 var(--font-body); letter-spacing: 0.3em; text-transform: uppercase; transition: background 0.35s var(--ease-cinematic), color 0.35s var(--ease-cinematic); }
+.sx-header a.sx-book:hover { background: var(--gold); color: var(--ink); }
+.sx-header__bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 20px; }
+.sx-header__bar .sx-logo { display: flex; align-items: center; min-height: 44px; }
+.sx-header__bar .sx-logo img { height: 42px; }
+.sx-header__actions { display: flex; align-items: center; gap: 6px; }
+.sx-header__actions a.sx-book { padding: 0 16px; min-height: 44px; display: inline-flex; align-items: center; }
+.sx-menu-btn { width: 44px; height: 44px; display: grid; place-items: center; cursor: pointer; color: inherit; }
+.sx-panel { display: none; position: absolute; top: 0; left: 0; right: 0; z-index: 60; background: var(--ivory); color: var(--ink); padding: 16px 20px 32px; box-shadow: 0 30px 60px -30px rgba(26, 26, 26, 0.4); }
+.sx-panel:target { display: block; }
+.sx-panel__top { display: flex; align-items: center; justify-content: space-between; }
+.sx-panel__top img { height: 42px; width: auto; }
+.sx-panel__close { width: 44px; height: 44px; display: grid; place-items: center; cursor: pointer; color: var(--ink); }
+.sx-panel nav { display: flex; flex-direction: column; margin-top: 24px; border-top: 1px solid var(--ink-faint); }
+.sx-panel nav a { font-family: var(--font-display); font-weight: 300; font-size: 28px; padding: 14px 0; border-bottom: 1px solid var(--ink-faint); color: var(--ink); }
+.sx-panel a.sx-btn { width: 100%; margin-top: 28px; min-height: 52px; color: var(--on-ink); }
+.sx-panel p { margin: 20px 0 0; font-weight: 300; font-size: 13px; line-height: 1.7; color: var(--ink-soft); }
+@media (min-width: 760px) {
+  .sx-header__wide { display: block; }
+  .sx-header__narrow { display: none; }
+}
+/* Narrow desktops: keep the three-column bar on one line by tightening tracking, then dropping the phone number. */
+@media (min-width: 760px) and (max-width: 1119px) {
+  .sx-header__grid { padding: 18px 24px; gap: 16px; }
+  .sx-nav, .sx-nav--end { gap: 0 16px; }
+  .sx-nav a { letter-spacing: 0.2em; }
+  .sx-header a.sx-book { letter-spacing: 0.2em; padding: 0 18px; }
+}
+@media (min-width: 760px) and (max-width: 939px) {
+  .sx-header .sx-nav a.sx-phone { display: none; }
+}
+
+/* Footer — lattice divider, four auto-fit columns, legal row */
+footer.sx-footer { border-top: 1px solid var(--ink-faint); padding: 0; font-size: 13px; color: var(--ink); background: var(--ivory); }
+.sx-footer .sx-divider { height: 120px; }
+.sx-footer__grid { max-width: var(--sx-max); margin: 0 auto; padding: 24px var(--sx-pad) 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px 48px; }
+.sx-footer__col { display: flex; flex-direction: column; gap: 0; font-weight: 300; line-height: 1.5; }
+.sx-footer__col .sx-eyebrow { margin: 0 0 6px; }
+.sx-footer__col a { display: flex; align-items: center; min-height: 44px; color: var(--ink-soft); border-bottom: 0; }
+.sx-footer__col a:hover { color: var(--gold-ink); }
+.sx-footer__brand p { margin: 20px 0 0; font-weight: 300; line-height: 1.7; color: var(--ink-soft); max-width: 22em; }
+.sx-footer__brand img { height: 58px; width: auto; }
+.sx-footer__legal { max-width: var(--sx-max); margin: 48px auto 0; padding: 22px var(--sx-pad) 36px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 24px; border-top: 1px solid var(--ink-faint); font-weight: 300; font-size: 12px; letter-spacing: 0.06em; color: var(--ink-soft); }
+
+/* Motion — off under prefers-reduced-motion. Elements are only hidden once JS
+   has marked <html class="js">, so a script failure never hides content. */
+@keyframes sx-kb { from { transform: scale(1); } to { transform: scale(1.09); } }
+.sx-kb { animation: sx-kb 32s var(--ease-out) infinite alternate; transform-origin: 60% 40%; }
+.js [data-reveal] { opacity: 0; transform: translateY(28px); transition: opacity 1.2s var(--ease-out), transform 1.2s var(--ease-out); }
+.js [data-reveal].is-in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .sx-kb { animation: none; }
+  .js [data-reveal] { opacity: 1; transform: none; transition: none; }
+}
